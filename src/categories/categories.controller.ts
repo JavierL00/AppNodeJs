@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
 
 @Controller('categories')
 export class CategoriesController {
@@ -9,7 +9,8 @@ export class CategoriesController {
     }
 
     @Post()
-    postCategory(): string {
+    postCategory(@Body() category): string {
+        console.log(category);
         return 'Creating a category';
     }
     
