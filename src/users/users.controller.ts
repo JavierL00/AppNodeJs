@@ -10,32 +10,25 @@ export class UsersController {
     constructor(private userService: UsersService) {}
 
     @Get()
-    getUsers(): User[]{
+    getUsers(): Promise<User[]>{
         return this.userService.getUsers();
     }
 
     @Get(':userId')
-    getUser(@Param('userId') userId: string): User {
-        return this.userService.getUser(parseInt(userId))
+    getUser(@Param('userId') userId: string){
+        return this.userService.getUser(userId)
     }
 
     @Post()
-    postUser(@Body() user: CreateUserDto): string {
-        console.log(user);
-        return 'Creating an user';
+    postUser(@Body() user: CreateUserDto): Promise<User> {
+        return this.userService.createUser(user)
     }
 
-    @Put(':id')
-    putUser(@Body() user: CreateUserDto, @Param('id') id): string {
-        console.log(user);
-        console.log(id);       
-        return 'Updating an user';
-    }
+    // FALTA EL METODO DE ACTUALIZAR (PUT)
 
     @Delete(':id')
-    deleteUser(@Param('id') id): string {
-        console.log(id);
-        return 'Deleting user'
+    deleteUser(@Param('id') id): Promise<User> {
+        return this.userService.deleteUser(id);
     }
 
 }

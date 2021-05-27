@@ -1,43 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { CreateUserDto } from './dto/create-user.dto';
 import { User } from "./interfaces/User";
 
 @Injectable()
 export class UsersService {
 
-    users: User[] = [
-        {
-            id: 1,
-            nombre: "Juan1",
-            apellido: "Herrera1",
-            direccion: "Av Manzana1",
-            email: "JHman1@gmail.com",
-            celular: "147583746"
-        },
-        {
-            id: 2,
-            nombre: "Juan2",
-            apellido: "Herrera2",
-            direccion: "Av Manzana2",
-            email: "JHman2@gmail.com",
-            celular: "247583746"
-        },
-        {
-            id: 3,
-            nombre: "Juan3",
-            apellido: "Herrera3",
-            direccion: "Av Manzana3",
-            email: "JHman3@gmail.com",
-            celular: "347583746"
-        }
-        
-    ];
+    constructor(@InjectModel('User') private userModel: Model<User>) {}
 
-    getUsers(): User[] {
-        return this.users;
+    async getUsers() {
+        return await this.userModel.find();
     }
 
-    getUser(id: number): User {
-        return this.users.find(user => user.id === id);
+    async getUser(id: string) {
+        return await this.userModel.findById(id);
     }
 
+    async createUser(user: CreateUserDto) {
+        const newUser = new this.userModel(user);
+        return await newUser.save();
+    }
+
+    // FALTA PODER ACTUALIZAR
+
+    async deleteUser(id: string) {
+        return await this.userModel.findByIdAndDelete(id);
+    }
 }
