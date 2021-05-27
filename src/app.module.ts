@@ -10,9 +10,10 @@ import { PostsService } from './posts/posts.service';
 import { PostsModule } from './posts/posts.module';
 import { CategoriesService } from './categories/categories.service';
 import { CategoriesModule } from './categories/categories.module';
+import { MongooseModule } from "@nestjs/mongoose";
 
 @Module({
-  imports: [UsersModule, PostsModule, CategoriesModule],
+  imports: [UsersModule, PostsModule, CategoriesModule, MongooseModule.forRoot('mongodb://localhost/nest-project') ],
   controllers: [AppController, UsersController, PostsController, CategoriesController],
   providers: [AppService, UsersService, PostsService, CategoriesService],
 })
