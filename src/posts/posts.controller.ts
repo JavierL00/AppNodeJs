@@ -1,32 +1,34 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 
 import { CreatePostDto } from './dto/create-post.dt'
-import { Request, Response } from "express";
+import { PostI } from './interfaces/Post';
+import { PostsService } from './posts.service';
 
 @Controller('posts')
 export class PostsController {
 
+    constructor(private postService: PostsService) {}
+
     @Get()
-    getPosts(): string {
-        return 'Getting Posts';
+    getPosts(): Promise<PostI[]> {
+        return this.postService.getPosts();
+    }
+
+    @Get(':id')
+    getPost(@Param('id') id): Promise<PostI> {
+        return this.postService.getPost(id);
     }
 
     @Post()
-    postPost(): string {
-        return 'Creating a post';
+    postPost(@Body() post: CreatePostDto): Promise<PostI> {
+        return this.postService.createPost(post);
     }
     
-    @Put(':id')
-    putPost(@Body() post: CreatePostDto, @Param('id') id): string {
-        console.log(post);
-        console.log(id);
-        return 'Updating a post';
-    }
+    // FALTA EL METODO DE ACTUALIZAR (PUT)
 
     @Delete(':id')
-    deletePost(@Param('id') id): string {
-        console.log(id);
-        return 'Deleting post'
+    deletePost(@Param('id') id): Promise<PostI> {
+        return this.postService.deletePost(id);
     }
 
 }
