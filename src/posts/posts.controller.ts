@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+
+import { CreatePostDto } from './dto/create-post.dt'
 
 @Controller('posts')
 export class PostsController {
@@ -13,13 +15,16 @@ export class PostsController {
         return 'Creating a post';
     }
     
-    @Put()
-    putPost(): string {
+    @Put(':id')
+    putPost(@Body() post: CreatePostDto, @Param('id') id): string {
+        console.log(post);
+        console.log(id);
         return 'Updating a post';
     }
 
-    @Delete()
-    deletePost(): string {
+    @Delete(':id')
+    deletePost(@Param('id') id): string {
+        console.log(id);
         return 'Deleting post'
     }
 

@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+
+import { CreateCategoryDto } from './dto/create-category.dto'
 
 @Controller('categories')
 export class CategoriesController {
@@ -14,13 +16,16 @@ export class CategoriesController {
         return 'Creating a category';
     }
     
-    @Put()
-    putCategory(): string {
+    @Put(':id')
+    putCategory(@Body() category: CreateCategoryDto, @Param('id') id): string {
+        console.log(category);
+        console.log(id);
         return 'Updating a category';
     }
 
-    @Delete()
-    deleteCategory(): string {
+    @Delete(':id')
+    deleteCategory(@Param('id') id): string {
+        console.log(id);
         return 'Deleting category'
     }
 

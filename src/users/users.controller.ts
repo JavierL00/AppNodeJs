@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Post, Put, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 
 import { CreateUserDto } from './dto/create-user.dto'
 
@@ -16,13 +16,16 @@ export class UsersController {
         return 'Creating an user';
     }
 
-    @Put()
-    putUser(): string {
+    @Put(':id')
+    putUser(@Body() user: CreateUserDto, @Param('id') id): string {
+        console.log(user);
+        console.log(id);       
         return 'Updating an user';
     }
 
-    @Delete()
-    deleteUser(): string {
+    @Delete(':id')
+    deleteUser(@Param('id') id): string {
+        console.log(id);
         return 'Deleting user'
     }
 
