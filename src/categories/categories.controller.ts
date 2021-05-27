@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 
 import { CreateCategoryDto } from './dto/create-category.dto'
+import { Request, Response } from "express";
 
 @Controller('categories')
 export class CategoriesController {
