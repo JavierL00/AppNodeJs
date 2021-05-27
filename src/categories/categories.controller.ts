@@ -1,33 +1,34 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 
 import { CreateCategoryDto } from './dto/create-category.dto'
-import { Request, Response } from "express";
+import { Category } from "./interfaces/Category";
+import { CategoriesService } from "./categories.service";
 
 @Controller('categories')
 export class CategoriesController {
+    
+    constructor(private categoryService: CategoriesService) {}
 
     @Get()
-    getCategories(): string {
-        return 'Getting categorias';
+    getCategories(): Promise<Category[]> {
+        return this.categoryService.getCategories();
+    }
+
+    @Get(':id')
+    getCategory(@Param('id') id): Promise<Category>{
+        return this.categoryService.getCategory(id);
     }
 
     @Post()
-    postCategory(@Body() category): string {
-        console.log(category);
-        return 'Creating a category';
+    postCategory(@Body() category: CreateCategoryDto): Promise<Category> {
+        return this.categoryService.createCategory(category);
     }
     
-    @Put(':id')
-    putCategory(@Body() category: CreateCategoryDto, @Param('id') id): string {
-        console.log(category);
-        console.log(id);
-        return 'Updating a category';
-    }
+    // FALTA EL METODO DE ACTUALIZAR (PUT)
 
     @Delete(':id')
-    deleteCategory(@Param('id') id): string {
-        console.log(id);
-        return 'Deleting category'
+    deleteCategory(@Param('id') id): Promise<Category> {
+        return this.categoryService.deleteCategory(id);
     }
 
 }
