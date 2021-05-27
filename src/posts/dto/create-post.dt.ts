@@ -1,5 +1,6 @@
 export class CreatePostDto {
-    userId: BigInteger;
+    userId: number;
+    categoryId: number;
     titulo: string;
     contenido: string;
     imagen: string;
